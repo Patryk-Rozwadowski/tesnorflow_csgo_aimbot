@@ -37,7 +37,7 @@ def convert(*loc):
 
 
 def main():
-    convert('train', 'test')
+    convert('../train', '../test')
 
 
 main()
