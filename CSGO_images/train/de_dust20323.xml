@@ -1,7 +1,7 @@
 <annotation>
 	<folder>csgo screenshots</folder>
 	<filename>de_dust20323.jpg</filename>
-	<path>D:\Projekty ML\cs go aim bot\CSGO_images\imagesde_dust20323.jpg</path>
+	<path>D:\Projekty ML\cs go aim bot\CSGO_images\images\de_dust20323.jpg</path>
 	<source>
 		<database>Unknown</database>
 	</source>
@@ -12,7 +12,7 @@
 	</size>
 	<segmented>0</segmented>
 	<object>
-		<name>c</name>
+		<name>ct</name>
 		<pose>Unspecified</pose>
 		<truncated>0</truncated>
 		<difficult>0</difficult>
@@ -24,7 +24,7 @@
 		</bndbox>
 	</object>
 	<object>
-		<name>ch</name>
+		<name>ct-head</name>
 		<pose>Unspecified</pose>
 		<truncated>0</truncated>
 		<difficult>0</difficult>

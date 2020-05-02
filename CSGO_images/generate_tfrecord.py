@@ -28,16 +28,16 @@ FLAGS = flags.FLAGS
 
 
 def class_text_to_int(row_label):
-    if row_label == 'c':
+    if row_label == 'ct':
         return 1
 
-    if row_label == 'ch':
+    if row_label == 'ct-head':
         return 2
 
-    if row_label == 't':
+    if row_label == 'tt':
         return 3
 
-    if row_label == 'th':
+    if row_label == 'tt-head':
         return 4
 
     else:

@@ -1,7 +1,7 @@
 <annotation verified="yes">
 	<folder>csgo screenshots</folder>
 	<filename>get_money_img.png</filename>
-	<path>D:\Projekty ML\cs go aim bot\CSGO_images\imagesget_money_img.png</path>
+	<path>D:\Projekty ML\cs go aim bot\CSGO_images\images\get_money_img.png</path>
 	<source>
 		<database>Unknown</database>
 	</source>
@@ -12,7 +12,7 @@
 	</size>
 	<segmented>0</segmented>
 	<object>
-		<name>ch</name>
+		<name>ct-head</name>
 		<pose>Unspecified</pose>
 		<truncated>0</truncated>
 		<difficult>0</difficult>
@@ -24,7 +24,7 @@
 		</bndbox>
 	</object>
 	<object>
-		<name>ch</name>
+		<name>ct-head</name>
 		<pose>Unspecified</pose>
 		<truncated>0</truncated>
 		<difficult>0</difficult>
@@ -36,7 +36,7 @@
 		</bndbox>
 	</object>
 	<object>
-		<name>c</name>
+		<name>ct</name>
 		<pose>Unspecified</pose>
 		<truncated>1</truncated>
 		<difficult>0</difficult>
@@ -48,7 +48,7 @@
 		</bndbox>
 	</object>
 	<object>
-		<name>c</name>
+		<name>ct</name>
 		<pose>Unspecified</pose>
 		<truncated>1</truncated>
 		<difficult>0</difficult>

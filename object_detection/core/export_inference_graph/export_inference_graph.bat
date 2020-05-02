@@ -1,1 +1,1 @@
-python export_inference_graph.py --input_type image_tensor --pipeline_config_path faster_rcnn_inception_v2_coco.config --trained_checkpoint_prefix "D:\Projekty ML\cs go aim bot\CSGO_images\train\summary\model.ckpt-48897" --output_directory inference_graph
+python export_inference_graph.py --input_type image_tensor --pipeline_config_path faster_rcnn_inception_v2_coco.config --trained_checkpoint_prefix "D:\Projekty ML\cs go aim bot\CSGO_\images\train\summary\model.ckpt-48897" --output_directory inference_graph
