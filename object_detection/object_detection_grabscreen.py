@@ -2,19 +2,30 @@ import cv2
 import numpy as np
 import os
 import tensorflow as tf
-import ctypes
 
-from time import time
+from CSGO_control import csgo_control
+
+import time
 from mss import mss
+
 from object_detection.utils import label_map_util
 from object_detection.utils import visualization_utils as vis_util
-from settings import object_detection_settings
+
 from settings import object_detection_paths
 
-os.environ["CUDA_DEVICE_ORDER"]="PCI_BUS_ID"
+width = 1200
+height = 900
+
+os.environ["CUDA_DEVICE_ORDER"] = "PCI_BUS_ID"
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 sct = mss()
-settings = object_detection_settings.Settings
+
+dot_thickness = 2
+settings = {
+    'title': 'Game vision',
+    'mss_mon': {"top": 40, "left": 0, "width": width, "height": height},
+}
+
 paths = object_detection_paths.paths
 NUM_CLASSES = 4
 
@@ -24,6 +35,46 @@ categories = label_map_util.convert_label_map_to_categories(label_map, max_num_c
 category_index = label_map_util.create_category_index(categories)
 
 detection_graph = tf.Graph()
+
+
+def test(arr):
+    array_ct_head = []
+    array_ct = []
+
+    array_tt_head = []
+    array_tt = []
+
+    for i, b in enumerate(arr):
+        if classes[0][i] == 2:  # ct_head
+
+            if scores[0][i] >= 0.5:
+                mid_x = (boxes[0][i][1] + boxes[0][i][3]) / 2
+                mid_y = (boxes[0][i][0] + boxes[0][i][2]) / 2
+                array_ct_head.append([mid_x, mid_y])
+                cv2.circle(image_np, (int(mid_x * width), int(mid_y * height)), dot_thickness, (0, 0, 255), -1)
+
+        if classes[0][i] == 1:  # ct
+            if scores[0][i] >= 0.5:
+                mid_x = (boxes[0][i][1] + boxes[0][i][3]) / 2
+                mid_y = boxes[0][i][0] + (boxes[0][i][2] - boxes[0][i][0]) / 6
+                array_ct.append([mid_x, mid_y])
+                cv2.circle(image_np, (int(mid_x * width), int(mid_y * height)), dot_thickness, (50, 150, 255), -1)
+
+        if classes[0][i] == 4:  # tt_head
+            if scores[0][i] >= 0.5:
+                mid_x = (boxes[0][i][1] + boxes[0][i][3]) / 2
+                mid_y = (boxes[0][i][0] + boxes[0][i][2]) / 2
+                array_tt_head.append([mid_x, mid_y])
+                cv2.circle(image_np, (int(mid_x * width), int(mid_y * height)), dot_thickness, (0, 0, 255), -1)
+
+        if classes[0][i] == 3:  # t
+            if scores[0][i] >= 0.5:
+                mid_x = (boxes[0][i][1] + boxes[0][i][3]) / 2
+                mid_y = boxes[0][i][0] + (boxes[0][i][2] - boxes[0][i][0]) / 6
+                array_tt.append([mid_x, mid_y])
+                cv2.circle(image_np, (int(mid_x * width), int(mid_y * height)), dot_thickness, (50, 150, 255), -1)
+
+
 with detection_graph.as_default():
     od_graph_def = tf.compat.v1.GraphDef()
     with tf.io.gfile.GFile(paths['frozen_graph'], 'rb') as fid:
@@ -34,16 +85,13 @@ with detection_graph.as_default():
 # Detection
 with detection_graph.as_default():
     with tf.compat.v1.Session(graph=detection_graph) as sess:
-        start_time = time()
+        start_time = time.time()
         fps_log_refresh = 2
         fps = 0
 
         while True:
-            # Get raw pixels from the screen, save it to a Numpy array
             image_np = np.array(sct.grab(settings['mss_mon']))
-
             image_np = cv2.cvtColor(image_np, cv2.COLOR_BGR2RGB)
-            # Expand dimensions since the model expects images to have shape: [1, None, None, 3]
             image_np_expanded = np.expand_dims(image_np, axis=0)
 
             # Detection
@@ -57,6 +105,7 @@ with detection_graph.as_default():
             (boxes, scores, classes, num_detections) = sess.run(
                 [boxes, scores, classes, num_detections],
                 feed_dict={image_tensor: image_np_expanded})
+            test(boxes[0])
             vis_util.visualize_boxes_and_labels_on_image_array(
                 image_np,
                 np.squeeze(boxes),
@@ -70,11 +119,11 @@ with detection_graph.as_default():
             cv2.imshow(settings['title'], cv2.cvtColor(image_np, cv2.COLOR_BGR2RGB))
 
             fps += 1
-            TIME = time() - start_time
+            TIME = time.time() - start_time
             if TIME >= fps_log_refresh:
                 print("FPS: ", fps / TIME)
                 fps = 0
-                start_time = time()
+                start_time = time.time()
 
             if cv2.waitKey(25) & 0xFF == ord("q"):
                 cv2.destroyAllWindows()
