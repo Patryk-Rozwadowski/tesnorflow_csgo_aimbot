@@ -68,7 +68,7 @@ flags.DEFINE_integer('worker_replicas', 1, 'Number of worker+trainer '
 flags.DEFINE_integer('ps_tasks', 0,
                      'Number of parameter server tasks. If None, does not use '
                      'a parameter server.')
-flags.DEFINE_string('train_dir', 'D:/Projekty ML/cs go aim bot/CSGO_images/train/summary',
+flags.DEFINE_string('train_dir', 'D:/Projekty ML/cs go aim bot/Dataset/train/summary',
                     'Directory to save the checkpoints and training summaries.')
 
 flags.DEFINE_string('pipeline_config_path', 'faster_rcnn_inception_v2_coco.config',

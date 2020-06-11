@@ -2,9 +2,6 @@ import cv2
 import numpy as np
 import os
 import tensorflow as tf
-
-from CSGO_control import csgo_control
-
 import time
 from mss import mss
 
@@ -37,7 +34,7 @@ category_index = label_map_util.create_category_index(categories)
 detection_graph = tf.Graph()
 
 
-def test(arr):
+def getTargetAndShoot(arr):
     array_ct_head = []
     array_ct = []
 
@@ -94,18 +91,16 @@ with detection_graph.as_default():
             image_np = cv2.cvtColor(image_np, cv2.COLOR_BGR2RGB)
             image_np_expanded = np.expand_dims(image_np, axis=0)
 
-            # Detection
             image_tensor = detection_graph.get_tensor_by_name('image_tensor:0')
             boxes = detection_graph.get_tensor_by_name('detection_boxes:0')
             scores = detection_graph.get_tensor_by_name('detection_scores:0')
             classes = detection_graph.get_tensor_by_name('detection_classes:0')
             num_detections = detection_graph.get_tensor_by_name('num_detections:0')
 
-            # Visualization of the results of a detection.
             (boxes, scores, classes, num_detections) = sess.run(
                 [boxes, scores, classes, num_detections],
                 feed_dict={image_tensor: image_np_expanded})
-            test(boxes[0])
+            getTargetAndShoot(boxes[0])
             vis_util.visualize_boxes_and_labels_on_image_array(
                 image_np,
                 np.squeeze(boxes),
